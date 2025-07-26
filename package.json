@@ -1,0 +1,22 @@
+{
+  "name": "drado",
+  "version": "1.0.0",
+  "description": "a to-do app named dratodo for people who needs an app for writing his/her program and planner in his/her computer",
+  "main": "App.js",
+  "scripts": {
+    "test": "node App.js",
+    "start": "node App.js"
+  },
+  "author": "DRA (Dariush Dehghani Farghani)",
+  "license": "ISC",
+  "dependencies": {
+    "build": "^0.1.4",
+    "express": "^4.19.2",
+    "lucide": "^0.503.0",
+    "peer": "^1.0.2",
+    "simple-peer": "^9.11.1",
+    "socket.io": "^4.7.2",
+    "sqlite3": "^5.1.6",
+    "uuid": "^9.0.1"
+  }
+}
