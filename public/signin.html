@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>sign in || DRAMA</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" >
+        <link rel="stylesheet" href="signin.css">
+        <script src="socket.io/socket.io.js" ></script>
+        <script src="socket.js" ></script>
+        <script src="index.js" ></script>
+        <script src="signin.style.js" ></script>
+    </head>
+    <body>
+        <div class="main_card" id="mc1">
+            <h1>Get Started</h1>
+            <div id="toggle">
+                <button class="toggle_btn tbs" id="toggle_btn_s" onclick="toggled('s')" >Sign Up</button>
+                <button class="toggle_btn" id="toggle_btn_l" onclick="toggled('l')" >Log In</button>
+            </div>
+            <div id="signup_card" >
+                <input type="usernmame" id="signup_name" class="input_type_1" placeholder="type a username like jake, /..."><br />
+                <input type="email" id="signup_email" class="input_type_1" placeholder="type an email like example@e.com"><br />
+                <input type="password" class="input_type_1" id="signup_password" placeholder="type a secure password"><br />
+                <button onclick="submit_signup()" class="button_type_1" >submit</button>
+            </div>
+            <div id="login_card" >
+                <input type="usernmame" onchange="this.style.borderColor = 'var(--color-2)';this.style.backgroundColor = '#ffcf9640'" id="login_name" class="input_type_1" placeholder="type your username like jake, /..."><br />
+                <input type="password" onchange="this.style.borderColor = 'var(--color-2)';this.style.backgroundColor = '#ffcf9640'" id="login_password" class="input_type_1" placeholder="type your password"><br />
+                <button onclick="submit_login()" class="button_type_1" >submit</button>
+            </div>
+        </div>
+        <div class="main_card" id="mc2">
+            <h1>Everything is setup, Are you ready?</h1>
+            <a href="/home" ><button class="button_type_1" >Yes! Let's go</button></a>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Home || DRAMA</title>
+        <link rel="stylesheet" href="/home.css">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" >
+        <script src="/theme.style.js"></script>
+        <script src="/socket.io/socket.io.js" ></script>
+        <script src="/lucide/lucide.min.js"></script>
+        <script src="/socket.js"></script>
+        <script src="/home.js" ></script>
+        <script src="/calendar.js"></script>
+    </head>
+    <body>
+        <div class="loading_scr">
+            <h1 style="color: #de3232;">DRAMA</h1>
+            <span class="loading_wheel" ></span>
+        </div>
+        <div id="modals" onclick="close_all_modals(event)" class="disabled_district">
+            <div id="add-todo-modal" class="disabled_district modal">
+                <h2>Add a ToDo</h2>
+                <input id="new-todo-name-inp" type="text" class="input_type1" placeholder="Enter a todo title">
+                <textarea id="new-todo-description" class="input_type1" placeholder="Description"></textarea>
+                <div id="datepicker">
+                    <input type="text" class="input_type1" id="datepicker-jalali-input" placeholder="انتخاب تاریخ" onclick='show_calendar("#datepicker-jalali-input", "#datepicker-calendar")' readonly>
+                    <div id="datepicker-calendar"></div>
+                </div>
+                <div class="twobtn">
+                    <button class="button_type1_outline" onclick="close_add_todo_window()">Cancel</button>
+                    <button class="button_type1" onclick="addit_to_file()">Done</button>
+                </div>
+            </div>
+            <div id="show-todo-modal" class="disabled_district modal">
+                <div id="todo-show-header" >
+                    <h1 style="color:var(--primary-color)" >To-Do</h1>
+                    <p id="todo-show-time">yyyy/mm/dd</p>
+                </div>
+                <h2 id="todo-show-title" style="overflow-x: scroll;">Title</h2>
+                <p id="todo-show-descript">Description:</p>
+            </div>
+            <div id="themes-modal" class="disabled_district modal">
+                <h2>Themes</h2>
+                <div id="themecolors-ctx" style="display: flex;" ></div>
+                <button class="button_type1" onclick="close_theme_change_win()">Ok</button>
+            </div>
+            <div id="profile-pic-change-modal" class="disabled_district modal">
+                <h3>Change your profile picture</h3>
+                <img id="profile-pic-preview" />
+                <div class="twobtn">
+                    <button class="button_type1_outline" onclick="close_change_profile_pic_window()" >Discard</button>
+                    <button class="button_type1" onclick="change_profile_pic()" >Submit</button>
+                </div>
+            </div>
+            <div id="new-worker-modal" class="disabled_district modal">
+                <h2>Add a new Worker</h2>
+                <input type="text" id="new-worker-search" class="input_type1" >
+                <button class="button_type1" onclick="search_workers_m()">Search</button>
+                <div id="workers-list">
+                </div>
+            </div>
+            <div id="new-todo-group-modal" class="disabled_district modal">
+                <h2>Add a new routine</h2>
+                <input type="text" id="todo_group_name_inp" class="input_type1" placeholder="Routine name">
+                <textarea name="routine description" id="todo_group_desc_inp" class="input_type1" placeholder="Routine description"></textarea>
+                <div id="routine_days_selecment_bar" class="selecment_bar" ></div>
+                <button class="button_type1" onclick="add_new_routine()">Submit</button>
+            </div>
+            <div id="new-room-modal" class="disabled_district modal" >
+                <h2>Create a new Room for your company</h2>
+                <input id="new_room_name_inp" class="input_type1" placeholder="Room Name" >
+                <button class="button_type1" onclick="new_room()" >submit</button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="sidebar_top">
+                <i data-lucide="x" onclick="close_sidebar()" class="close_sidebar_btn"></i>
+                <div class="logo">D R A M A</div>
+                <p id="shamsi_date"></p>
+                <button id="home_sidebtn" onclick="sidebar_clicked('home')" ><i data-lucide="home" ></i>home</button>
+                <button id="planner_sidebtn" onclick="sidebar_clicked('planner')"><i data-lucide="notebook" ></i>planner</button>
+                <button id="share_sidebtn" onclick="sidebar_clicked('share')"><i data-lucide="message-circle"></i><span>Connect</span></button>
+                <button id="com_sidebtn" onclick="sidebar_clicked('com')" class="disabled_district" ><i data-lucide="building-2"></i><span>My company</span></button>
+                <button id="setting_sidebtn" onclick="sidebar_clicked('setting')"><i data-lucide="settings"></i><span>Settings</span></button>
+            </div>
+            <div class="sidebar_bottom" onclick="sidebar_clicked('setting')">
+                <img class="profile_photo" src="/imgs/undraw_young-man-avatar_wgbd.svg" alt="profile picture" height="100%">
+                <p id="username_ctx" ></p>
+            </div>
+        </div>
+        <div class="main-content">
+                <div id="header">
+                    <div style="display: flex;align-items: center;">
+                        <i data-lucide="arrow-left" onclick="sidebar_clicked('home')" id="back_arrow" class="disabled" ></i>
+                        <h2>DRAMA</h2>
+                    </div>
+                    <i data-lucide="menu" onclick="show_menu()" ></i>
+                </div>
+            <div class="content">
+                <div class="home-panel panel" ondragover="event.preventDefault()" ondrop="drop_idea(event)">
+                    <div class="no-todo disabled">
+                        <h2>Fast, Secure <br/> communication</h2>
+                        <p>Do all your jobs togather</p>
+                        <button class="cta" onclick="new_todo_file()">First To-Do</button>
+                        <ul>
+                            <li>Real time contract</li>
+                            <li>Share your Experience</li>
+                            <li>Do the best with your team</li>
+                        </ul>
+                    </div>
+                    <div class="planner-panel panel">
+                        <div class="text-list-wrap">
+                            <h2>TO-do</h2>
+                            <div id="timeset" >
+                                <i data-lucide="chevron-left" id="home-timeset-prev" onclick="home_timeset_prev()" ></i>
+                                <h2 id="timeset-date" onclick="sidebar_clicked('planner')"></h2>
+                                <i data-lucide="chevron-right" id="home-timeset-next" onclick="home_timeset_next()" ></i>
+                            </div>
+                            <div id="todo-ctx" ></div>
+                            <div id="com-todos-ctx" ></div>
+                        </div>
+                        <div class="twobtn" style="gap: 0;">
+                            <button class="button_type1" id="new_todo_btn" onclick="new_todo_file()" >New</button>
+                            <span id="add_more_btn" >
+                                <i data-lucide="menu" ></i>
+                                <div class="group_select disabled" >
+                                    <button class="button_type1" onclick="go_set_todo_group()">new Routine</button>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-panel">
+                    <div class="planner-panel panel disabled">
+                        <div id="bigCalendar">
+                            <div id="calendar"></div>
+                            <input type="text" id="jalaliInput" placeholder="انتخاب تاریخ" readonly>
+                        </div>
+                        <h2>Routines</h2>
+                        <div id="routines-ctx"></div>
+                    </div>
+                    <div class="share-panel panel">
+                        <h2>Rooms</h2>
+                        <div id="rooms_ctx">
+                            <div class="room_box shine" >
+                                <h3>global</h3>
+                                <a href="/rooms/?room=global"><i data-lucide="link" ></i></a>
+                            </div>
+                        </div>
+                        <h2>Routines+</h2>
+                        <button class="button_type1" onclick="sidebar_clicked('share');socket.emit('fetch_routines')" ><i data-lucide="search"></i>Search global routines</button>
+                        <p>Search some routines</p>
+                        <div id="routines_new_box" class="disabled" >
+                            <span class="loading_wheel disabled"></span>
+                        </div>
+                    </div>
+                    <div class="setting-panel panel disabled">
+                        <img src="/imgs/undraw_young-man-avatar_wgbd.svg" class="profile-pic profile_photo" onclick="document.getElementById('user-photo-fs').click()" /><br />
+                        <button class="button_type2" onclick="document.getElementById('user-photo-fs').click()" >Change Profile Photo</button>
+                        <input type="file" accept="image/*" class="disabled_district" id="user-photo-fs" onchange="pphoto_choosed(event)" >
+                        <h2 id='company_nsp' ></h2>
+                        Dark theme:
+                        <label class="DRAswitch" id="switch_theme">
+                            <input type="checkbox" class="switch_input" id="switch_theme_input" onclick="toggle_dark_theme()">
+                            <span class="slider" id="switch_theme_slider" ></span>
+                        </label>
+                        <button class="button_type2"id="themechange_btn" onclick="open_theme_menu()">Theme</button>
+                        <a href="/DRAMACOM-signin" style="text-decoration: none;" id="add-company-button"><button class="button_type2">Add your company</button></a>
+                    </div>
+                    <div class="com-panel panel disabled">
+                        <div style="display: flex;height: 100%;flex: 1;">
+                            <div id="emp-bar" class="inner-panel">
+                                <h2>Your workers</h2>
+                                <div id="emp-list">
+                                    
+                                </div>
+                                <button class="no_btn" onclick="open_add_contact_page()"><i data-lucide="plus"></i>Add your workers</button>
+                            </div>
+                            <div class="inner-panel">
+                                <h3>Your comrooms</h3>
+                                <button class="button_type1" onclick="new_room_btn()">New Room</button>
+                                <h3>Company todos</h3>
+                                <input id="company_todo_inp"type="text" placeholder="type a todo">
+                                <button class="button_type2" onclick="send_company_todo()">Send</button>
+                                <span style="color: #333;" id="vcl">0 participants selected</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

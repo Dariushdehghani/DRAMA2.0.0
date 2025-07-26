@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>video conference || DRAMA</title>
+        <link rel="stylesheet" href="/video_conferences.css">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" >
+        <script src="/lucide/lucide.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/socket.js"></script>
+        <script src="/theme.style.js"></script>
+        <script src="/video_conference.js"></script>
+    </head>
+    <body>
+        <div class="initiator">
+            <img id="initiator_profile_pic" height="100px" style="border-radius: 50%;" >
+            <h1 class="roomname"></h1>
+            <p class="username_initiator" style="margin-bottom: 20px;"></p>
+            <button class="button_type2" id="joinBtn" onclick="joinbtnClick()" disabled>wait...</button>
+        </div>
+        <div class="container">
+            <div class="top-bar">
+                <h2 style="color:var(--primary-color);">DRAMA</h2>
+                <h2 class="roomname">conference</h2>
+                <button class="button_type2">leave</button>
+            </div>
+            <div class="participants">
+                <div class="participant">
+                    <div class="video-box">
+                        <video id="localVideo" autoplay muted ></video>
+                    </div>
+                    <div class="info">
+                        <span class="name">Me</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="count">1 participant</div>
+                <div class="controls">
+                    <button id="video-toggle" onclick="toggleVideo()"><i data-lucide="video" ></i></button>
+                    <button id="audio-toggle" onclick="toggleAudio()"><i data-lucide="mic" ></i></button>
+                    <button onclick="endCall()" class="end"><i data-lucide="phone" ></i></button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
